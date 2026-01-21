@@ -10053,8 +10053,8 @@
   --cal-text-success: #285239;
   --cal-text-attention: #74331b;
   --cal-text-error: #811d1d;
-  --cal-brand: #111827;
-  --cal-brand-emphasis: #0f0f0f;
+  --cal-brand: #2568ef;
+  --cal-brand-emphasis: #1a4ec7;
   --cal-brand-text: #fff;
   --shadow-dropdown: 0px 5px 20px 0px #0000001a, 0px 10px 40px 0px #00000008;
   --shadow-switch-thumb: 0px 0.8px 0.8px 0px #0000001a, 0px 0.8px 3.2px 0px #00000014;
@@ -10159,9 +10159,9 @@
   --cal-text-success: #e4fbe9;
   --cal-text-attention: #fcefd9;
   --cal-text-error: #f9e3e1;
-  --cal-brand: #fff;
-  --cal-brand-emphasis: #9ca3b0;
-  --cal-brand-text: #000;
+  --cal-brand: #5a8dff;
+  --cal-brand-emphasis: #2568ef;
+  --cal-brand-text: #fff;
   --fill-emphasis: var(--cal-text-emphasis);
   --fill-default: var(--cal-text);
   --fill-subtle: var(--cal-text-subtle);
