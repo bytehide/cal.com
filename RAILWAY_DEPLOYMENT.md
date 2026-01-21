@@ -190,8 +190,14 @@ Para actualizar tu deployment:
 - **Solución:** Ejecuta `yarn type-check:ci --force` localmente para ver errores
 - Verifica que no haya errores de TypeScript
 
-**Error:** `Out of memory`
-- **Solución:** Aumenta `MAX_OLD_SPACE_SIZE` a 8192
+**Error:** `Out of memory` / `JavaScript heap out of memory`
+- **Causa:** El build de Next.js + TypeScript consume mucha RAM
+- **Solución automática:** El Dockerfile ahora usa 8192 MB por defecto
+- **Si aún falla:**
+  1. Railway → Tu servicio → **Settings** → **Build Arguments**
+  2. Agrega: `MAX_OLD_SPACE_SIZE=10240` (10 GB)
+  3. Redeploy (Deployments → ⋮ → Redeploy)
+- **Nota:** Railway debe tener suficiente RAM disponible (verifica tu plan)
 
 ### Startup falla
 
