@@ -10,7 +10,7 @@ ARG CALCOM_TELEMETRY_DISABLED
 ARG DATABASE_URL
 ARG NEXTAUTH_SECRET=secret
 ARG CALENDSO_ENCRYPTION_KEY=secret
-ARG MAX_OLD_SPACE_SIZE=8192
+ARG MAX_OLD_SPACE_SIZE=10240
 ARG NEXT_PUBLIC_API_V2_URL
 ARG CSP_POLICY
 
@@ -18,6 +18,8 @@ ARG CSP_POLICY
 ARG NEXT_PUBLIC_SINGLE_ORG_SLUG
 ARG ORGANIZATIONS_ENABLED
 
+# Force high memory limit for Railway builds (10 GB)
+# Railway Pro plan has enough RAM for this
 ENV NEXT_PUBLIC_WEBAPP_URL=http://NEXT_PUBLIC_WEBAPP_URL_PLACEHOLDER \
   NEXT_PUBLIC_API_V2_URL=$NEXT_PUBLIC_API_V2_URL \
   NEXT_PUBLIC_LICENSE_CONSENT=$NEXT_PUBLIC_LICENSE_CONSENT \
@@ -30,7 +32,7 @@ ENV NEXT_PUBLIC_WEBAPP_URL=http://NEXT_PUBLIC_WEBAPP_URL_PLACEHOLDER \
   CALENDSO_ENCRYPTION_KEY=${CALENDSO_ENCRYPTION_KEY} \
   NEXT_PUBLIC_SINGLE_ORG_SLUG=$NEXT_PUBLIC_SINGLE_ORG_SLUG \
   ORGANIZATIONS_ENABLED=$ORGANIZATIONS_ENABLED \
-  NODE_OPTIONS=--max-old-space-size=${MAX_OLD_SPACE_SIZE} \
+  NODE_OPTIONS="--max-old-space-size=${MAX_OLD_SPACE_SIZE}" \
   BUILD_STANDALONE=true \
   CSP_POLICY=$CSP_POLICY
 
@@ -47,7 +49,8 @@ RUN yarn install
 RUN yarn workspace @calcom/trpc run build
 RUN yarn --cwd packages/embeds/embed-core workspace @calcom/embed-core run build
 RUN yarn --cwd apps/web workspace @calcom/web run copy-app-store-static
-RUN yarn --cwd apps/web workspace @calcom/web run build
+# Explicitly set NODE_OPTIONS for Next.js build to prevent OOM
+RUN NODE_OPTIONS="--max-old-space-size=${MAX_OLD_SPACE_SIZE}" yarn --cwd apps/web workspace @calcom/web run build
 RUN rm -rf node_modules/.cache .yarn/cache apps/web/.next/cache
 
 FROM node:20 AS builder-two
