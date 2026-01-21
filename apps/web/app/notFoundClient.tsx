@@ -8,7 +8,7 @@ import {
   getOrgDomainConfigFromHostname,
   subdomainSuffix,
 } from "@calcom/features/ee/organizations/lib/orgDomains";
-import { DOCS_URL, IS_CALCOM, WEBSITE_URL } from "@calcom/lib/constants";
+import { DOCS_URL, IS_CALCOM, IS_SELF_HOSTED, WEBSITE_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Icon } from "@calcom/ui/components/icon";
 
@@ -143,7 +143,7 @@ export function NotFound({ host }: { host: string }) {
           )}
         </div>
         <div className="mt-12">
-          {((!isSubpage && IS_CALCOM) || pageType === PageType.ORG || pageType === PageType.TEAM) && (
+          {!IS_SELF_HOSTED && ((!isSubpage && IS_CALCOM) || pageType === PageType.ORG || pageType === PageType.TEAM) && (
             <ul role="list" className="my-4">
               <li className="border-2 border-green-500 px-4 py-2">
                 <a
